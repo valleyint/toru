@@ -16,7 +16,7 @@ func TestParse(t *testing.T) {
 			name: "Sync single package",
 			args: []string{"-S", "python"},
 			want: &ParsedCommand{
-				Backend:   "nix",
+				Backend:   "lix",
 				Operation: OpSync,
 				Modifiers: Modifiers{},
 				Targets:   []string{"python"},
@@ -27,7 +27,7 @@ func TestParse(t *testing.T) {
 			name: "Sync and sysupgrade",
 			args: []string{"-Syu"},
 			want: &ParsedCommand{
-				Backend:   "nix",
+				Backend:   "lix",
 				Operation: OpSync,
 				Modifiers: Modifiers{Refresh: 1, SysUpgrade: true},
 				Targets:   []string{},
@@ -49,7 +49,7 @@ func TestParse(t *testing.T) {
 			name: "Remove recursive and unneeded",
 			args: []string{"-Rns", "neovim"},
 			want: &ParsedCommand{
-				Backend:   "nix",
+				Backend:   "lix",
 				Operation: OpRemove,
 				Modifiers: Modifiers{Unneeded: true, Recursive: true},
 				Targets:   []string{"neovim"},
@@ -60,7 +60,7 @@ func TestParse(t *testing.T) {
 			name: "Remove cascade",
 			args: []string{"-Rc", "bash"},
 			want: &ParsedCommand{
-				Backend:   "nix",
+				Backend:   "lix",
 				Operation: OpRemove,
 				Modifiers: Modifiers{Cascade: true},
 				Targets:   []string{"bash"},
@@ -71,7 +71,7 @@ func TestParse(t *testing.T) {
 			name: "Query search",
 			args: []string{"-Qs", "python"},
 			want: &ParsedCommand{
-				Backend:   "nix",
+				Backend:   "lix",
 				Operation: OpQuery,
 				Modifiers: Modifiers{Search: true},
 				Targets:   []string{"python"},
@@ -82,7 +82,7 @@ func TestParse(t *testing.T) {
 			name: "Sync clean cache twice",
 			args: []string{"-Scc"},
 			want: &ParsedCommand{
-				Backend:   "nix",
+				Backend:   "lix",
 				Operation: OpSync,
 				Modifiers: Modifiers{Clean: 2},
 				Targets:   []string{},
@@ -93,7 +93,7 @@ func TestParse(t *testing.T) {
 			name: "Long flags sync refresh",
 			args: []string{"--sync", "--refresh"},
 			want: &ParsedCommand{
-				Backend:   "nix",
+				Backend:   "lix",
 				Operation: OpSync,
 				Modifiers: Modifiers{Refresh: 1},
 				Targets:   []string{},
@@ -104,7 +104,7 @@ func TestParse(t *testing.T) {
 			name: "Help flag standalone",
 			args: []string{"--help"},
 			want: &ParsedCommand{
-				Backend:   "nix",
+				Backend:   "lix",
 				Operation: OpUnknown,
 				Modifiers: Modifiers{Help: true},
 				Targets:   []string{},
@@ -115,7 +115,7 @@ func TestParse(t *testing.T) {
 			name: "Help flag with operation",
 			args: []string{"-Sh"},
 			want: &ParsedCommand{
-				Backend:   "nix",
+				Backend:   "lix",
 				Operation: OpSync,
 				Modifiers: Modifiers{Help: true},
 				Targets:   []string{},

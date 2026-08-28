@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"toru/pkg/backend"
+	"toru/pkg/backend/lix"
 	"toru/pkg/backend/nix"
 	"toru/pkg/backend/yay"
 	"toru/pkg/cache"
@@ -15,6 +16,7 @@ import (
 
 func init() {
 	// Register the available backends
+	backend.Register(lix.New())
 	backend.Register(nix.New())
 	backend.Register(yay.New())
 }
@@ -69,8 +71,8 @@ func main() {
 	copy(archTargets, cmd.Targets)
 
 	// 5. Translation Phase
-	// Only Nix requires Repology translation. Yay is 1:1 since it's native Arch.
-	if len(cmd.Targets) > 0 && cmd.Backend == "nix" {
+	// Only Nix and Lix require Repology translation. Yay is 1:1 since it's native Arch.
+	if len(cmd.Targets) > 0 && (cmd.Backend == "nix" || cmd.Backend == "lix") {
 		translatedTargets := make([]string, 0, len(cmd.Targets))
 		targetRepo := "nix_unstable"
 

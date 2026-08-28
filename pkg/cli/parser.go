@@ -45,13 +45,13 @@ type ParsedCommand struct {
 	Targets   []string
 }
 
-// Parse extracts the backend, operation, modifiers, and targets from raw command-line arguments.
+// Parse analyzes the CLI arguments and returns the ParsedCommand intent.
 func Parse(args []string) (*ParsedCommand, error) {
 	cmd := &ParsedCommand{
-		Backend:   "nix", // Default backend
+		Backend:   "lix", // Default backend
 		Operation: OpUnknown,
 		Modifiers: Modifiers{},
-		Targets:   make([]string, 0),
+		Targets:   []string{},
 	}
 
 	for _, arg := range args {
@@ -204,8 +204,8 @@ func Parse(args []string) (*ParsedCommand, error) {
 		return nil, fmt.Errorf("no primary operation specified (e.g., -S, -R, -Q)")
 	}
 
-	if cmd.Backend != "nix" && cmd.Backend != "yay" {
-		return nil, fmt.Errorf("unsupported backend: %s (must be 'nix' or 'yay')", cmd.Backend)
+	if cmd.Backend != "nix" && cmd.Backend != "yay" && cmd.Backend != "lix" {
+		return nil, fmt.Errorf("unsupported backend: %s (must be 'nix', 'lix', or 'yay')", cmd.Backend)
 	}
 
 	return cmd, nil
